@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../src/navigationTypes';
-import TrackPlayer, { useProgress, State } from 'react-native-track-player';
+import TrackPlayer, { useProgress, State, useTrackPlayerEvents, Event  } from 'react-native-track-player';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Slider from '@react-native-community/slider';
+
+
 
 type AudioPlayerPageRouteProp = RouteProp<RootStackParamList, 'AudioPlayerPage'>;
 
@@ -38,6 +40,7 @@ const AudioPlayerPage = ({ route }: { route: AudioPlayerPageRouteProp }) => {
       setCurrentTrackIndex(newIndex);
     }
   };
+  
 
   const previousTrack = async () => {
     const newIndex = currentTrackIndex - 1;
@@ -46,6 +49,19 @@ const AudioPlayerPage = ({ route }: { route: AudioPlayerPageRouteProp }) => {
       setCurrentTrackIndex(newIndex);
     }
   };
+
+  useEffect(() => {
+    if (progress.position >= progress.duration && progress.duration > 0) {
+      nextTrack();
+    }
+  }, [progress.position, progress.duration]);
+  
+  
+  useTrackPlayerEvents([Event.PlaybackTrackChanged], async (event) => {
+    if (event.nextTrack !== null) {
+      setCurrentTrackIndex(event.nextTrack); 
+    }
+  });
 
   useEffect(() => {
     const setupPlaylist = async () => {
