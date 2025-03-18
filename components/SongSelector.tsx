@@ -5,7 +5,7 @@ import { globalStyles } from '../styles/globalStyles';
 import { checkStoragePermission, requestStoragePermission } from '../utils/PermissionHandler';
 import { listAudioFiles } from './AudioFileHandler';
 import { Song } from '../src/navigationTypes';
-import Icon from 'react-native-vector-icons/MaterialIcons'; // Import d'icônes
+import Icon from 'react-native-vector-icons/MaterialIcons'; 
 
 type Props = {
   navigation: any;
@@ -47,13 +47,13 @@ const SongSelector = ({ navigation, route }: Props) => {
       const playlistsJSON = await AsyncStorage.getItem('playlists');
       const playlists = playlistsJSON ? JSON.parse(playlistsJSON) : {};
 
-      // Ajoute les nouvelles chansons sans supprimer les anciennes
+      
       playlists[playlistName] = [...(playlists[playlistName] || []), ...selectedSongs];
 
       await AsyncStorage.setItem('playlists', JSON.stringify(playlists));
       Alert.alert('Succès', `Chansons ajoutées à "${playlistName}" !`);
       
-      // Naviguer vers les détails de la playlist
+      
       navigation.navigate('PlaylistDetail', { playlistName });
     } catch (error) {
       console.error('Erreur de sauvegarde', error);
@@ -100,11 +100,11 @@ const SongSelector = ({ navigation, route }: Props) => {
         )}
       />
 
-      {/* Boutons OK et Annuler */}
+      
       <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 20 }}>
         <TouchableOpacity
           style={{
-            backgroundColor: '#d3d3d3', // Gris clair
+            backgroundColor: '#d3d3d3', 
             paddingVertical: 10,
             paddingHorizontal: 20,
             borderRadius: 20,

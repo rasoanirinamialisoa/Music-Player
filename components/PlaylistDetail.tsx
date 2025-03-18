@@ -30,7 +30,7 @@ const PlaylistDetails = ({ route, navigation }: Props) => {
   };
 
   const handleSongClick = (song: any) => {
-    // Naviguer vers l'écran de lecture avec la chanson sélectionnée
+
     navigation.navigate('SongPlayer', { song });
   };
 
