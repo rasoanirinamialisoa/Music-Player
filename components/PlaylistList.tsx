@@ -3,7 +3,7 @@ import { View, Text, FlatList, TouchableOpacity, StyleSheet, Modal, TextInput, B
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../src/navigationTypes';
 import { Song } from '../src/navigationTypes';
-import Icon from 'react-native-vector-icons/MaterialIcons'; // Pour l'icône "+"
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 type PlaylistListNavigationProp = StackNavigationProp<RootStackParamList, 'PlaylistList'>;
 
@@ -13,29 +13,27 @@ type Props = {
 
 const PlaylistList = ({ navigation }: Props) => {
   const [playlists, setPlaylists] = useState<{ id: string; name: string; songs: Song[] }[]>([
-    // Exemple de playlists existantes (vide par défaut)
+
   ]);
 
-  const [modalVisible, setModalVisible] = useState(false); // Pour afficher/masquer la modal
-  const [playlistName, setPlaylistName] = useState(''); // Pour stocker le nom de la nouvelle playlist
+  const [modalVisible, setModalVisible] = useState(false); 
+  const [playlistName, setPlaylistName] = useState(''); 
 
-  // Créer une nouvelle playlist
   const createPlaylist = () => {
     if (playlistName.trim()) {
       const newPlaylist = {
-        id: String(playlists.length + 1), // Générer un ID unique
+        id: String(playlists.length + 1),
         name: playlistName,
         songs: [],
       };
       setPlaylists([...playlists, newPlaylist]);
-      setModalVisible(false); // Fermer la modal
-      setPlaylistName(''); // Réinitialiser le champ de saisie
+      setModalVisible(false);
+      setPlaylistName('');
     }
   };
 
   return (
     <View style={styles.container}>
-      {/* Afficher le bouton au centre si aucune playlist n'existe, sinon en haut */}
       {playlists.length === 0 ? (
         <View style={styles.centerContainer}>
           <TouchableOpacity
@@ -56,7 +54,6 @@ const PlaylistList = ({ navigation }: Props) => {
         </TouchableOpacity>
       )}
 
-      {/* Liste des playlists */}
       <FlatList
         data={playlists}
         keyExtractor={(item) => item.id}
@@ -85,16 +82,16 @@ const PlaylistList = ({ navigation }: Props) => {
               value={playlistName}
               onChangeText={setPlaylistName}
             />
-            {/* Boutons alignés en ligne */}
+         
             <View style={styles.buttonContainer}>
               <TouchableOpacity
-                style={[styles.button, styles.cancelButton]} // Style pour Annuler
+                style={[styles.button, styles.cancelButton]} 
                 onPress={() => setModalVisible(false)}
               >
                 <Text style={styles.buttonText}>Annuler</Text>
               </TouchableOpacity>
               <TouchableOpacity
-                style={[styles.button, styles.createButtonModal]} // Style pour Créer
+                style={[styles.button, styles.createButtonModal]}
                 onPress={createPlaylist}
               >
                 <Text style={styles.buttonText}>Créer</Text>
@@ -146,19 +143,19 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Fond semi-transparent
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modalContent: {
     width: '80%',
     padding: 20,
-    backgroundColor: '#fff', // Fond clair pour la modal
+    backgroundColor: '#fff', 
     borderRadius: 10,
   },
   modalTitle: {
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 16,
-    color: '#333', // Texte sombre
+    color: '#333',
   },
   input: {
     borderWidth: 1,
@@ -167,35 +164,32 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 16,
   },
-  // Conteneur pour aligner les boutons en ligne
+ 
   buttonContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between', // Espacement entre les boutons
-    marginTop: 16,
+    justifyContent: 'space-between', 
   },
 
-  // Style de base pour les boutons
   button: {
-    flex: 1, // Prendre autant d'espace que possible
+    flex: 1, 
     padding: 10,
     borderRadius: 5,
     alignItems: 'center',
     justifyContent: 'center',
-    marginHorizontal: 5, // Espacement entre les boutons
+    marginHorizontal: 5, 
   },
 
   cancelButton: {
     backgroundColor: 'rgba(173, 126, 133, 0.8)',
   },
 
-  // Style spécifique pour le bouton Créer (violet avec opacité)
+  
   createButtonModal: {
-    backgroundColor: 'rgba(151, 13, 151, 0.8)', // Violet avec 70% d'opacité
+    backgroundColor: 'rgba(151, 13, 151, 0.8)', 
   },
 
-  // Style du texte des boutons (inchangé)
   buttonText: {
-    color: '#fff', // Texte blanc
+    color: '#fff', 
     fontSize: 16,
     fontWeight: 'bold',
   },

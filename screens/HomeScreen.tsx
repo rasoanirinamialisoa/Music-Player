@@ -139,8 +139,8 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: '#fff',
     borderRadius: 10,
-    elevation: 3, // Ombre pour Android
-    shadowColor: '#000', // Ombre pour iOS
+    elevation: 3,
+    shadowColor: '#000', 
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
@@ -156,19 +156,19 @@ const styles = StyleSheet.create({
     borderRadius: 50,
   },
   songItem: {
-    flexDirection: 'row', // Pour aligner l'icône et le texte horizontalement
-    alignItems: 'center', // Centrer verticalement
+    flexDirection: 'row', 
+    alignItems: 'center', 
     padding: 16,
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
   },
   icon: {
-    width: 40, // Taille de l'icône
+    width: 40, 
     height: 40,
-    marginRight: 12, // Espace entre l'icône et le texte
+    marginRight: 12, 
   },
   textContainer: {
-    flex: 1, // Pour occuper tout l'espace disponible
+    flex: 1, 
   },
   songTitle: {
     fontSize: 16,
