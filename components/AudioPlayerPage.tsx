@@ -4,7 +4,7 @@ import { RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../src/navigationTypes';
 import TrackPlayer, { useProgress, State, useTrackPlayerEvents, Event } from 'react-native-track-player';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import Slider from '@react-native-community/slider';
+import Slider from '@react-native-community/slider'; // Import mis à jour
 
 type AudioPlayerPageRouteProp = RouteProp<RootStackParamList, 'AudioPlayerPage'>;
 
@@ -37,6 +37,7 @@ const AudioPlayerPage = ({ route }: { route: AudioPlayerPageRouteProp }) => {
   const images = [
     require('../assets/girl1.png'),
     require('../assets/girl2.png'),
+    require('../assets/girl3.png')
   ];
 
   useEffect(() => {
@@ -200,7 +201,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
-    backgroundColor: 'rgba(12, 12, 12, 0.5)',
+    backgroundColor: 'rgba(12, 12, 12, 0.5)', // Semi-transparent overlay for readability
     borderRadius: 10,
   },
   musicIcon: {
