@@ -9,8 +9,7 @@ export type RootStackParamList = {
     PlaylistDetail: { playlistId: string; playlistName: string; songs: Song[];  selectedSongs?: Song[] };
     PlaylistDetails: { playlistName: string };
     SongSelector: { playlistName: string }; 
-    
-    PlaylistManager: undefined,
+   
   };
  
 export type Song = {
