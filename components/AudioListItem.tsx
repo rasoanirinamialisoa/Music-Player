@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     padding: 12,
     borderBottomWidth: 1,
     borderBottomColor: '#ccc', 
-    backgroundColor: '#fff', 
+    backgroundColor: 'rgb(25, 2, 39)', 
   },
   icon: {
     width: 40,
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   name: {
-    color: '#333', 
+    color: 'rgb(255, 255, 255)', 
     fontSize: 16,
   },
   artist: {

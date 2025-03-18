@@ -4,7 +4,7 @@ import { StyleSheet } from 'react-native';
 export const colors = {
   primary: '#6834b7', 
   secondary: '#FF6B6B', 
-  background: '#FFFFFF', 
+  background: 'rgb(18, 1, 28)', 
   text: '#1E1E1E', 
   accent: '#FFD166', 
 };
@@ -35,3 +35,4 @@ export const globalStyles = StyleSheet.create({
   },
   
 });
+

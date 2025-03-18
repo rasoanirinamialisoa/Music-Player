@@ -74,15 +74,16 @@ const SongSelector = ({ navigation, route }: Props) => {
             style={{
               flexDirection: 'row',
               padding: 10,
-              backgroundColor: selectedSongs.some((s) => s.id === item.id) ? 'lightblue' : 'white',
+              backgroundColor: selectedSongs.some((s) => s.id === item.id) ? 'rgba(48, 12, 71, 0.5)' : 'rgb(25, 2, 39)',
               alignItems: 'center',
               borderBottomWidth: 1,
               borderBottomColor: '#ddd',
+              
             }}
             onPress={() => toggleSelection(item)}
           >
-            <Icon name="music-note" size={24} color="gray" style={{ marginRight: 10 }} />
-            <Text style={{ flex: 1 }}>{item.title}</Text>
+            <Icon name="music-note" size={24} color="white" style={{ marginRight: 10 }} />
+            <Text style={{ color: 'white', fontWeight: 'bold', flex:1 }}>{item.title}</Text>
             <TouchableOpacity
               style={{
                 width: 30,
@@ -129,7 +130,7 @@ const SongSelector = ({ navigation, route }: Props) => {
           }}
           onPress={saveToPlaylist}
         >
-          <Text style={{ color: 'black', fontWeight: 'bold' }}>OK</Text>
+          <Text style={{ color: 'black', fontWeight: 'bold'}}>OK</Text>
         </TouchableOpacity>
       </View>
     </View>

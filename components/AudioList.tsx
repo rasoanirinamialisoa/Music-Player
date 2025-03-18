@@ -27,7 +27,7 @@ const AudioList = ({ navigation }: Props) => {
   }, []);
 
   return (
-    <View style={globalStyles.container}>
+    <View style={{ flex: 1, backgroundColor: 'rgb(25, 2, 39)' }}>
       {isSelectorVisible ? (
         <SongSelector
           onConfirmSelection={(selectedSongs) => {

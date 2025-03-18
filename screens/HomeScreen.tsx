@@ -8,6 +8,7 @@ import { setupPlayer, playAudio } from '../components/AudioPlayerHandler';
 import { Song } from '../src/navigationTypes';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import TrackPlayer from 'react-native-track-player';
+import LinearGradient from 'react-native-linear-gradient'; 
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
 
@@ -29,7 +30,6 @@ const HomeScreen = ({ navigation }: Props) => {
     setAudioFiles(files);
   };
 
-  
   const playRandomSong = () => {
     if (audioFiles.length > 0) {
       const randomIndex = Math.floor(Math.random() * audioFiles.length);
@@ -55,26 +55,36 @@ const HomeScreen = ({ navigation }: Props) => {
   return (
     <View style={styles.container}>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={[styles.button, styles.purpleButton]}
-          onPress={() => navigation.navigate('AudioList', { fromPlaylist: true })}
+        <LinearGradient
+          colors={['#FF69B4','#9B59B6']}
+          style={[styles.button, styles.gradientButton]}
         >
-          <Text style={styles.buttonText}>Liste des chansons</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.button, styles.greenButton]}
-          onPress={() => navigation.navigate('PlaylistList')}
+          <TouchableOpacity onPress={() => navigation.navigate('AudioList')}>
+            <Text style={styles.buttonText}>Liste des chansons</Text>
+          </TouchableOpacity>
+        </LinearGradient>
+
+        <LinearGradient
+          colors={['#9B59B6', '#FF69B4']} 
+          style={[styles.button, styles.gradientButton]}
         >
-          <Text style={styles.buttonText}>Listes de lecture</Text>
-        </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('PlaylistList')}>
+            <Text style={styles.buttonText}>Listes de lecture</Text>
+          </TouchableOpacity>
+        </LinearGradient>
       </View>
 
       <View style={styles.randomSection}>
-        <Text style={styles.randomTitle}>Lecture aléatoire</Text>
-        <TouchableOpacity onPress={playRandomSong} style={styles.playButton}>
-          <Icon name="play-arrow" size={30} color="#fff" />
-        </TouchableOpacity>
-      </View>
+  <Text style={styles.randomTitle}>Lecture aléatoire</Text>
+  <LinearGradient
+    colors={['#FF69B4', '#9B59B6']} 
+    style={styles.gradientPlayButton} 
+  >
+    <TouchableOpacity onPress={playRandomSong} style={styles.playButton}>
+      <Icon name="play-arrow" size={30} color="#fff" />
+    </TouchableOpacity>
+  </LinearGradient>
+</View>
 
       <FlatList
         data={audioFiles}
@@ -106,7 +116,7 @@ const HomeScreen = ({ navigation }: Props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f0f0f0',
+    backgroundColor: 'rgb(25, 2, 39)',
     padding: 16,
   },
   buttonContainer: {
@@ -120,11 +130,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: 'center',
   },
-  purpleButton: {
-    backgroundColor: '#6200ee',
-  },
-  greenButton: {
-    backgroundColor: '#1db954',
+  gradientButton: {
+    borderRadius: 10,
+    padding: 10,
   },
   buttonText: {
     fontSize: 16,
@@ -137,10 +145,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 20,
     padding: 10,
-    backgroundColor: '#fff',
+    backgroundColor: 'rgb(47, 46, 48)',
     borderRadius: 10,
     elevation: 3,
-    shadowColor: '#000', 
+    shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
@@ -148,31 +156,34 @@ const styles = StyleSheet.create({
   randomTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#333',
+    color: 'rgb(255, 255, 255)',
   },
   playButton: {
-    backgroundColor: '#6200ee',
-    padding: 10,
+    padding: 8,
     borderRadius: 50,
   },
+  gradientPlayButton: {
+    borderRadius: 50,
+    padding: 5,
+  },
   songItem: {
-    flexDirection: 'row', 
-    alignItems: 'center', 
+    flexDirection: 'row',
+    alignItems: 'center',
     padding: 16,
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
   },
   icon: {
-    width: 40, 
+    width: 40,
     height: 40,
-    marginRight: 12, 
+    marginRight: 12,
   },
   textContainer: {
-    flex: 1, 
+    flex: 1,
   },
   songTitle: {
     fontSize: 16,
-    color: '#333',
+    color: '#aaa',
   },
   songArtist: {
     fontSize: 14,

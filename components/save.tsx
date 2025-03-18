@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
-    backgroundColor: 'rgba(12, 12, 12, 0.5)',
+    backgroundColor: 'rgba(8, 8, 8, 0.5)', // Semi-transparent overlay for readability
     borderRadius: 10,
   },
   musicIcon: {
