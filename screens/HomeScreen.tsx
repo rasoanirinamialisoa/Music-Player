@@ -7,6 +7,7 @@ import { listAudioFiles } from '../components/AudioFileHandler';
 import { setupPlayer, playAudio } from '../components/AudioPlayerHandler';
 import { Song } from '../src/navigationTypes';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import TrackPlayer from 'react-native-track-player';
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
 
@@ -17,7 +18,6 @@ type Props = {
 const HomeScreen = ({ navigation }: Props) => {
   const [audioFiles, setAudioFiles] = useState<Song[]>([]);
 
-  // audio
   const loadAudioFiles = async () => {
     const hasPermission = await checkStoragePermission();
     if (!hasPermission) {
@@ -54,7 +54,6 @@ const HomeScreen = ({ navigation }: Props) => {
 
   return (
     <View style={styles.container}>
-      {/* Boutons en haut en ligne (row) */}
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={[styles.button, styles.purpleButton]}
@@ -70,7 +69,6 @@ const HomeScreen = ({ navigation }: Props) => {
         </TouchableOpacity>
       </View>
 
-      {/* Section Lecture aléatoire */}
       <View style={styles.randomSection}>
         <Text style={styles.randomTitle}>Lecture aléatoire</Text>
         <TouchableOpacity onPress={playRandomSong} style={styles.playButton}>
@@ -78,7 +76,6 @@ const HomeScreen = ({ navigation }: Props) => {
         </TouchableOpacity>
       </View>
 
-      {/* Liste des chansons avec icônes */}
       <FlatList
         data={audioFiles}
         keyExtractor={(item) => item.id}
@@ -91,9 +88,8 @@ const HomeScreen = ({ navigation }: Props) => {
               songsList: audioFiles 
             })}
           >
-            {/* Icône de musique */}
             <Image
-              source={require('../assets/music_icon.png')} // Chemin de l'icône
+              source={require('../assets/music_icon.png')}
               style={styles.icon}
             />
             <View style={styles.textContainer}>
