@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity } from 'react-native';
 import TrackPlayer from 'react-native-track-player';
 import { globalStyles } from '../styles/globalStyles';
-import songs from '../src/data';
-import { checkStoragePermission, requestStoragePermission } from '../utils/PermissionHandler';
-import { listAudioFiles } from './AudioFileHandler';
-import { setupPlayer } from './AudioPlayerHandler';
-import AudioListItem from './AudioListItem';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../src/navigationTypes';
-import { Song } from '../src/navigationTypes'; 
+import { Song } from '../src/navigationTypes';
+import AudioListItem from './AudioListItem';
+import SongSelector from './SongSelector';
+import { setupPlayer } from '../services/trackPlayerService';
 
 type AudioListNavigationProp = StackNavigationProp<RootStackParamList, 'AudioList'>;
 
@@ -19,26 +17,10 @@ type Props = {
 
 const AudioList = ({ navigation }: Props) => {
   const [audioFiles, setAudioFiles] = useState<Song[]>([]);
-
-  const loadAudioFiles = async () => {
-    const hasPermission = await checkStoragePermission();
-    if (!hasPermission) {
-      const permissionGranted = await requestStoragePermission();
-      if (!permissionGranted) return;
-    }
-
-    const files = await listAudioFiles();
-    const combinedData = [
-      ...songs,
-      ...files,
-    ];
-    setAudioFiles(combinedData);
-  };
+  const [isSelectorVisible, setSelectorVisible] = useState(false);
 
   useEffect(() => {
     setupPlayer();
-    loadAudioFiles();
-
     return () => {
       TrackPlayer.reset();
     };
@@ -46,21 +28,37 @@ const AudioList = ({ navigation }: Props) => {
 
   return (
     <View style={globalStyles.container}>
-      
-      <FlatList
-        data={audioFiles}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-            <AudioListItem
-            item={item}
-            onPress={() => navigation.navigate('AudioPlayerPage', { 
-              song: item, 
-              songs: audioFiles,
-              songsList: audioFiles 
-            })}
+      {isSelectorVisible ? (
+        <SongSelector
+          onConfirmSelection={(selectedSongs) => {
+            setAudioFiles(selectedSongs);
+            setSelectorVisible(false);
+          }}
+          onCancel={() => setSelectorVisible(false)}
+        />
+      ) : (
+        <>
+          <FlatList
+            data={audioFiles}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => (
+              <AudioListItem
+                item={item}
+                onPress={() =>
+                  navigation.navigate('AudioPlayerPage', {
+                    song: item,
+                    songs: audioFiles,
+                    songsList: audioFiles,
+                  })
+                }
+              />
+            )}
           />
-        )}
-      />
+          <TouchableOpacity onPress={() => setSelectorVisible(true)}>
+            <Text style={{ color: 'blue', margin: 10 }}>Ajouter des chansons</Text>
+          </TouchableOpacity>
+        </>
+      )}
     </View>
   );
 };

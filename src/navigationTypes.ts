@@ -6,7 +6,7 @@ export type RootStackParamList = {
     AudioList: undefined;
     AudioPlayerPage: { song: Song; songs: Song[], songsList: Song[]};
     PlaylistList: undefined;
-    PlaylistDetail: { playlistId: string; playlistName: string; songs: Song[] };
+    PlaylistDetail: { playlistId: string; playlistName: string; songs: Song[];  selectedSongs?: Song[] };
   };
  
 export type Song = {

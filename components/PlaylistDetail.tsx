@@ -1,24 +1,39 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
-import { RouteProp } from '@react-navigation/native';
-import { RootStackParamList } from '../src/navigationTypes';
-import { Song } from '../src/navigationTypes';
+import { RouteProp, useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList, Song } from '../src/navigationTypes';
 
 type PlaylistDetailRouteProp = RouteProp<RootStackParamList, 'PlaylistDetail'>;
+type NavigationProp = StackNavigationProp<RootStackParamList, 'PlaylistDetail'>;
 
 type Props = {
   route: PlaylistDetailRouteProp;
 };
 
 const PlaylistDetail = ({ route }: Props) => {
-  const { playlistId, playlistName, songs } = route.params;
+  const navigation = useNavigation<NavigationProp>();
+  const { playlistId, playlistName } = route.params;
+  const [songs, setSongs] = useState<Song[]>(route.params.songs || []);
+  const [selectedSongs, setSelectedSongs] = useState<Song[]>([]);
+
+  useEffect(() => {
+    if (route.params?.selectedSongs) {
+      setSongs([...songs, ...route.params.selectedSongs]);
+    }
+  }, [route.params?.selectedSongs]);
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{playlistName}</Text>
-      <TouchableOpacity style={styles.addButton}>
-        <Text style={styles.addButtonText}>Ajouter à la playlist</Text>
+      
+      <TouchableOpacity 
+        style={styles.addButton} 
+        onPress={() => navigation.navigate('AudioList', { fromPlaylist: true })}
+      >
+        <Text style={styles.addButtonText}>+ Ajouter des chansons</Text>
       </TouchableOpacity>
+
       <FlatList
         data={songs}
         keyExtractor={(item) => item.id}

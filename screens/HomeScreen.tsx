@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   button: {
-    width: '48%', // Pour laisser un peu d'espace entre les boutons
+    width: '48%',
     padding: 15,
     borderRadius: 10,
     alignItems: 'center',
