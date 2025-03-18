@@ -54,9 +54,6 @@ const AudioList = ({ navigation }: Props) => {
               />
             )}
           />
-          <TouchableOpacity onPress={() => setSelectorVisible(true)}>
-            <Text style={{ color: 'blue', margin: 10 }}>Ajouter des chansons</Text>
-          </TouchableOpacity>
         </>
       )}
     </View>

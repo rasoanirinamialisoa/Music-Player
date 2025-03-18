@@ -1,88 +1,72 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
-import { RouteProp, useNavigation } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList, Song } from '../src/navigationTypes';
-
-type PlaylistDetailRouteProp = RouteProp<RootStackParamList, 'PlaylistDetail'>;
-type NavigationProp = StackNavigationProp<RootStackParamList, 'PlaylistDetail'>;
+import React, { useEffect, useState } from 'react';
+import { View, Text, FlatList, TouchableOpacity } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { globalStyles } from '../styles/globalStyles';
+import { RouteProp } from '@react-navigation/native';
+import { RootStackParamList } from '../src/navigationTypes';
+import AudioListItem from './AudioListItem';
 
 type Props = {
-  route: PlaylistDetailRouteProp;
+  route: RouteProp<RootStackParamList, 'PlaylistDetail'>;
+  navigation: any;
 };
 
-const PlaylistDetail = ({ route }: Props) => {
-  const navigation = useNavigation<NavigationProp>();
-  const { playlistId, playlistName } = route.params;
-  const [songs, setSongs] = useState<Song[]>(route.params.songs || []);
-  const [selectedSongs, setSelectedSongs] = useState<Song[]>([]);
+const PlaylistDetails = ({ route, navigation }: Props) => {
+  const { playlistName } = route.params;
+  const [songs, setSongs] = useState<any[]>([]);
 
   useEffect(() => {
-    if (route.params?.selectedSongs) {
-      setSongs([...songs, ...route.params.selectedSongs]);
-    }
-  }, [route.params?.selectedSongs]);
+    loadPlaylist();
+  }, []);
+
+  const loadPlaylist = async () => {
+    const playlistsJSON = await AsyncStorage.getItem('playlists');
+    const playlists = playlistsJSON ? JSON.parse(playlistsJSON) : {};
+    setSongs(playlists[playlistName] || []);
+  };
+
+  const handleAddSongs = () => {
+    navigation.navigate('SongSelector', { playlistName });
+  };
+
+  const handleSongClick = (song: any) => {
+    // Naviguer vers l'écran de lecture avec la chanson sélectionnée
+    navigation.navigate('SongPlayer', { song });
+  };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>{playlistName}</Text>
-      
-      <TouchableOpacity 
-        style={styles.addButton} 
-        onPress={() => navigation.navigate('AudioList', { fromPlaylist: true })}
-      >
-        <Text style={styles.addButtonText}>+ Ajouter des chansons</Text>
-      </TouchableOpacity>
-
+    <View style={globalStyles.container}>
+      <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{playlistName}</Text>
       <FlatList
-        data={songs}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <View style={styles.songItem}>
-            <Text style={styles.songTitle}>{item.title}</Text>
-            <Text style={styles.songArtist}>{item.artist}</Text>
-          </View>
-        )}
-      />
+            data={songs}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => (
+              <AudioListItem
+                item={item}
+                onPress={() =>
+                  navigation.navigate('AudioPlayerPage', {
+                    song: item,
+                    songs: songs,
+                    songsList: songs,
+                  })
+                }
+              />
+            )}
+          />
+      <TouchableOpacity
+        style={{
+          backgroundColor: 'purple',
+          padding: 10,
+          borderRadius: 5,
+          marginTop: 20,
+          alignItems: 'center',
+        }}
+        onPress={handleAddSongs}
+      >
+        <Text style={{ color: 'white', fontWeight: 'bold' }}>+ Ajouter des chansons</Text>
+      </TouchableOpacity>
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 16,
-  },
-  addButton: {
-    backgroundColor: '#1db954',
-    padding: 16,
-    borderRadius: 8,
-    alignItems: 'center',
-    marginBottom: 16,
-  },
-  addButtonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  songItem: {
-    padding: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
-  },
-  songTitle: {
-    fontSize: 16,
-    color: '#333',
-  },
-  songArtist: {
-    fontSize: 14,
-    color: '#666',
-  },
-});
-
-export default PlaylistDetail;
+export default PlaylistDetails;

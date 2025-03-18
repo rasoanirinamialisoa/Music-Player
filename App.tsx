@@ -8,6 +8,7 @@ import PlaylistList from './components/PlaylistList';
 import PlaylistDetail from './components/PlaylistDetail';
 import { RootStackParamList } from './src/navigationTypes';
 import TrackPlayer from 'react-native-track-player';
+import SongSelector from './components/SongSelector';
 
 TrackPlayer.setupPlayer().then(async () => {
   console.log("TrackPlayer est prêt !");
@@ -43,6 +44,11 @@ const App = () => {
           name="PlaylistDetail"
           component={PlaylistDetail}
           options={{ title: 'Détails de la playlist' }}
+        />
+        <Stack.Screen
+          name="SongSelector"
+          component={SongSelector}
+          options={{ title: 'Sélectionner des chansons' }}
         />
       </Stack.Navigator>
     </NavigationContainer>

@@ -57,7 +57,7 @@ const HomeScreen = ({ navigation }: Props) => {
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={[styles.button, styles.purpleButton]}
-          onPress={() => navigation.navigate('AudioList')}
+          onPress={() => navigation.navigate('AudioList', { fromPlaylist: true })}
         >
           <Text style={styles.buttonText}>Liste des chansons</Text>
         </TouchableOpacity>
