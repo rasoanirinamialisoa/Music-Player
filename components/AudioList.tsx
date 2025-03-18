@@ -8,17 +8,10 @@ import { listAudioFiles } from './AudioFileHandler';
 import { setupPlayer } from './AudioPlayerHandler';
 import AudioListItem from './AudioListItem';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../src/navigationTypes'; 
-
+import { RootStackParamList } from '../src/navigationTypes';
+import { Song } from '../src/navigationTypes'; 
 
 type AudioListNavigationProp = StackNavigationProp<RootStackParamList, 'AudioList'>;
-
-type Song = {
-  id: string;
-  title: string;
-  artist: string;
-  path: string;
-};
 
 type Props = {
   navigation: AudioListNavigationProp;
@@ -53,14 +46,18 @@ const AudioList = ({ navigation }: Props) => {
 
   return (
     <View style={globalStyles.container}>
-      <Text style={globalStyles.title}>Fichiers Audio</Text>
+      
       <FlatList
         data={audioFiles}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
-          <AudioListItem
+            <AudioListItem
             item={item}
-            onPress={() => navigation.navigate('AudioPlayerPage', { song: item, songsList: audioFiles })}
+            onPress={() => navigation.navigate('AudioPlayerPage', { 
+              song: item, 
+              songs: audioFiles,
+              songsList: audioFiles 
+            })}
           />
         )}
       />

@@ -9,7 +9,7 @@ import Slider from '@react-native-community/slider';
 type AudioPlayerPageRouteProp = RouteProp<RootStackParamList, 'AudioPlayerPage'>;
 
 const AudioPlayerPage = ({ route }: { route: AudioPlayerPageRouteProp }) => {
-  const { song } = route.params;
+  const { song, songs, songsList } = route.params;
   const [isPlaying, setIsPlaying] = useState(false);
   const progress = useProgress();
 

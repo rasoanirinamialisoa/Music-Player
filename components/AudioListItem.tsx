@@ -1,7 +1,5 @@
-
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
-import { colors } from '../styles/globalStyles'; 
 
 type Song = {
   id: string;
@@ -16,16 +14,28 @@ type AudioListItemProps = {
 };
 
 const AudioListItem = ({ item, onPress }: AudioListItemProps) => {
+  const [isPressed, setIsPressed] = useState(false); 
+
+  const handlePress = () => {
+    setIsPressed(true); 
+    onPress(item.path);
+    setTimeout(() => setIsPressed(false), 200);
+  };
+
   return (
-    <TouchableOpacity onPress={() => onPress(item.path)}>
+    <TouchableOpacity
+      onPress={handlePress}
+      activeOpacity={0.7} 
+      style={styles.touchable}
+    >
       <View style={styles.item}>
         <Image
           source={require('../assets/music_icon.png')}
           style={styles.icon}
         />
         <View style={styles.textContainer}>
-          <Text style={styles.name}>{item.title}</Text>
-          <Text style={styles.artist}>{item.artist}</Text>
+          <Text style={[styles.name, isPressed && styles.pressedText]}>{item.title}</Text>
+          <Text style={[styles.artist, isPressed && styles.pressedText]}>{item.artist}</Text>
         </View>
       </View>
     </TouchableOpacity>
@@ -33,12 +43,16 @@ const AudioListItem = ({ item, onPress }: AudioListItemProps) => {
 };
 
 const styles = StyleSheet.create({
+  touchable: {
+    backgroundColor: '#fff', 
+  },
   item: {
     flexDirection: 'row',
     alignItems: 'center',
     padding: 12,
     borderBottomWidth: 1,
-    borderBottomColor: colors.secondary, 
+    borderBottomColor: '#ccc', 
+    backgroundColor: '#fff', 
   },
   icon: {
     width: 40,
@@ -49,12 +63,15 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   name: {
-    color: colors.text, 
+    color: '#333', 
     fontSize: 16,
   },
   artist: {
-    color: colors.accent, 
+    color: '#666', 
     fontSize: 12,
+  },
+  pressedText: {
+    color: '#6200ee',
   },
 });
 
